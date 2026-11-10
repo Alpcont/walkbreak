@@ -29,7 +29,10 @@ jobs:
           $BT/aapt2 dump badging app/build/outputs/apk/debug/app-debug.apk | head -20
           $BT/aapt2 dump xmltree --file AndroidManifest.xml app/build/outputs/apk/debug/app-debug.apk | grep -iE "testOnly|sdkVersion|debuggable" || true
 
+      - name: Rename APK
+        run: mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/WalkBreak.apk
+
       - uses: actions/upload-artifact@v4
         with:
           name: WalkBreak-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/debug/WalkBreak.apk

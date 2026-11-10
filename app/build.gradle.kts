@@ -11,8 +11,18 @@ android {
         applicationId = "com.alp.walkbreak"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
+    }
+
+    // Fixed key so every new APK installs as an update over the previous one.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("walkbreak-debug.keystore")
+            storePassword = "walkbreak"
+            keyAlias = "walkbreak"
+            keyPassword = "walkbreak"
+        }
     }
 
     buildTypes {

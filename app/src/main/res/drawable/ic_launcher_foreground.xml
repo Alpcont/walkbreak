@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Walker inside a progress ring. Content stays inside the 66dp adaptive-icon safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- ring track -->
+    <path
+        android:pathData="M54,27 A27,27 0 1,1 54,81 A27,27 0 1,1 54,27"
+        android:strokeColor="#40FFFFFF"
+        android:strokeWidth="4.5" />
+    <!-- progress arc (300 degrees) -->
+    <path
+        android:pathData="M54,27 A27,27 0 1,1 30.62,40.5"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="4.5" />
+    <!-- progress head dot -->
+    <path
+        android:fillColor="#FFE8A3"
+        android:pathData="M26.62,40.5 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <!-- walker body -->
+    <path
+        android:pathData="M55.5,46 L52.5,58 M54.8,49 L48.5,54.5 M54.8,49 L60.5,55 M52.5,58 L47,67 M52.5,58 L57.5,62.5 L60,69"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="4" />
+    <!-- walker head -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M52.2,39.5 a4.3,4.3 0 1,0 8.6,0 a4.3,4.3 0 1,0 -8.6,0" />
+</vector>

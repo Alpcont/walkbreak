@@ -40,6 +40,7 @@ class TimerService : Service() {
         @Volatile var running = false; private set
         @Volatile var phase = Phase.FOCUS; private set
         @Volatile var endTimeMillis = 0L; private set
+        @Volatile var phaseLengthMs = 0L; private set
         @Volatile var completedWalks = 0; private set
     }
 
@@ -78,6 +79,7 @@ class TimerService : Service() {
     private fun beginPhase(newPhase: Phase, alert: Boolean) {
         phase = newPhase
         val length = if (newPhase == Phase.FOCUS) focusMs else walkMs
+        phaseLengthMs = length
         endTimeMillis = System.currentTimeMillis() + length
         handler.removeCallbacks(switchPhase)
         handler.postDelayed(switchPhase, length)
@@ -166,7 +168,8 @@ class TimerService : Service() {
     private fun buildOngoing(): Notification {
         val title = if (phase == Phase.FOCUS) "📚 Focus time" else "🚶 Walk time"
         return Notification.Builder(this, CH_ONGOING)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_walk)
+            .setColor(getColor(R.color.brand))
             .setContentTitle(title)
             .setContentText("Walks done: $completedWalks")
             .setWhen(endTimeMillis)
@@ -186,7 +189,8 @@ class TimerService : Service() {
         else
             "Back to studying 📚" to "Next walk in ${focusMs / 60_000} minutes."
         return Notification.Builder(this, CH_ALERT)
-            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setSmallIcon(R.drawable.ic_stat_walk)
+            .setColor(getColor(R.color.brand))
             .setContentTitle(title)
             .setContentText(text)
             .setCategory(Notification.CATEGORY_ALARM)
