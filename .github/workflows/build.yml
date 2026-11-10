@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,3 +39,16 @@ jobs:
         with:
           name: WalkBreak-APK
           path: app/build/outputs/apk/debug/WalkBreak.apk
+
+      # Publish as a GitHub Release so this fixed link always downloads the newest APK:
+      # https://github.com/Alpcont/walkbreak/releases/latest/download/WalkBreak.apk
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
+          gh release create "v$VER-build${{ github.run_number }}" \
+            app/build/outputs/apk/debug/WalkBreak.apk \
+            --title "WalkBreak $VER (build ${{ github.run_number }})" \
+            --notes "Tap WalkBreak.apk below to download and install." \
+            --latest
