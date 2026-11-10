@@ -22,6 +22,13 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug --no-daemon
 
+      - name: Verify APK
+        run: |
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          $BT/apksigner verify --verbose app/build/outputs/apk/debug/app-debug.apk
+          $BT/aapt2 dump badging app/build/outputs/apk/debug/app-debug.apk | head -20
+          $BT/aapt2 dump xmltree --file AndroidManifest.xml app/build/outputs/apk/debug/app-debug.apk | grep -iE "testOnly|sdkVersion|debuggable" || true
+
       - uses: actions/upload-artifact@v4
         with:
           name: WalkBreak-APK
